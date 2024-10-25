@@ -7,17 +7,18 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.montoyo.mcef.api.*;
 
 
+
 @Mod(modid = "browser", name = "browser", version = "1.0")
 public class browsemod implements IDisplayHandler, IJSQueryHandler {
 
-    public static browsemod INSTANCE;
+    @SidedProxy(clientSide = "com.example.browsermod.ClientProxy", serverSide = "com.example.browsermod.CommonProxy",modId = "browser")
+    public static CommonProxy proxy;
+
+    public static browsemod INSTANCE = new browsemod();;
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
-        INSTANCE = this;
         proxy.preInit(event);  // Handle client/server-specific pre-initialization
     }
-    @SidedProxy(clientSide = "com.example.browsermod.ClientProxy", serverSide = "com.example.browsermod.CommonProxy")
-    public static CommonProxy proxy;
 
 
 

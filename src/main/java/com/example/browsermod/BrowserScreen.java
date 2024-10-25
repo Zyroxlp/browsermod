@@ -4,7 +4,6 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.renderer.GlStateManager;
-
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.montoyo.mcef.MCEF;
@@ -31,7 +30,7 @@ public class BrowserScreen extends GuiScreen {
     private static final String YT_REGEX3 = "^https?://(?:www\\.)?youtube\\.com/embed/([a-zA-Z0-9_\\-]+)(\\?.+)?$";
 
     public BrowserScreen() {
-        urlToLoad = MCEF.HOME_PAGE;
+        urlToLoad = "https://www.google.com";
     }
 
     public BrowserScreen(String url) {
@@ -42,26 +41,29 @@ public class BrowserScreen extends GuiScreen {
     public void initGui() {
         ClientProxy.hudBrowser = null;
 
-        if(browser == null) {
-            //Grab the API and make sure it isn't null.
+        if (browser == null) {
+            // Grab the API and make sure it isn't null.
             API api = MCEFApi.getAPI();
-            if(api == null)
+            if (api == null)
                 return;
 
-            //Create a browser and resize it to fit the screen
+            // Create a browser and resize it to fit the screen
             browser = api.createBrowser((urlToLoad == null) ? MCEF.HOME_PAGE : urlToLoad, false);
-            urlToLoad = null;
+            if (urlToLoad != null) {
+                browser.loadURL(urlToLoad);
+                urlToLoad = null;
+            }
         }
 
-        //Resize the browser if window size changed
-        if(browser != null)
+        // Resize the browser if window size changed
+        if (browser != null)
             browser.resize(mc.displayWidth, mc.displayHeight - scaleY(20));
 
-        //Create GUI
+        // Create GUI
         Keyboard.enableRepeatEvents(true);
         buttonList.clear();
 
-        if(url == null) {
+        if (url == null) {
             buttonList.add(back = (new GuiButton(0, 0, 0, 20, 20, "<")));
             buttonList.add(fwd = (new GuiButton(1, 20, 0, 20, 20, ">")));
             buttonList.add(go = (new GuiButton(2, width - 60, 0, 20, 20, "Go")));
@@ -71,7 +73,6 @@ public class BrowserScreen extends GuiScreen {
 
             url = new GuiTextField(5, fontRenderer, 40, 0, width - 100, 20);
             url.setMaxStringLength(65535);
-            //url.setText("mod://mcef/home.html");
         } else {
             buttonList.add(back);
             buttonList.add(fwd);
@@ -79,7 +80,7 @@ public class BrowserScreen extends GuiScreen {
             buttonList.add(min);
             buttonList.add(vidMode);
 
-            //Handle resizing
+            // Handle resizing
             vidMode.x = width - 40;
             go.x = width - 60;
             min.x = width - 20;
@@ -97,7 +98,7 @@ public class BrowserScreen extends GuiScreen {
     }
 
     public void loadURL(String url) {
-        if(browser == null)
+        if (browser == null)
             urlToLoad = url;
         else
             browser.loadURL(url);
@@ -105,7 +106,7 @@ public class BrowserScreen extends GuiScreen {
 
     @Override
     public void updateScreen() {
-        if(urlToLoad != null && browser != null) {
+        if (urlToLoad != null && browser != null) {
             browser.loadURL(urlToLoad);
             urlToLoad = null;
         }
@@ -113,26 +114,26 @@ public class BrowserScreen extends GuiScreen {
 
     @Override
     public void drawScreen(int i1, int i2, float f) {
-        //Render the URL box first because it overflows a bit
+        // Render the URL box first because it overflows a bit
         url.drawTextBox();
 
-        //Render buttons
+        // Render buttons
         super.drawScreen(i1, i2, f);
 
-        //Renders the browser if itsn't null
-        if(browser != null) {
+        // Renders the browser if it isn't null
+        if (browser != null) {
             GlStateManager.disableDepth();
             GlStateManager.enableTexture2D();
             GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
-            browser.draw(.0d, height, width, 20.d); //Don't forget to flip Y axis.
+            browser.draw(.0d, height, width, 20.d); // Don't forget to flip Y axis.
             GlStateManager.enableDepth();
         }
     }
 
     @Override
     public void onGuiClosed() {
-        //Make sure to close the browser when you don't need it anymore.
-        if(!ClientProxy.hasBackup()&& browser != null)
+        // Make sure to close the browser when you don't need it anymore.
+        if (!ClientProxy.hasBackup() && browser != null)
             browser.close();
 
         Keyboard.enableRepeatEvents(false);
@@ -140,8 +141,8 @@ public class BrowserScreen extends GuiScreen {
 
     @Override
     public void handleInput() {
-        while(Keyboard.next()) {
-            if(Keyboard.getEventKey() == Keyboard.KEY_ESCAPE) {
+        while (Keyboard.next()) {
+            if (Keyboard.getEventKey() == Keyboard.KEY_ESCAPE) {
                 mc.displayGuiScreen(null);
                 return;
             }
@@ -151,48 +152,48 @@ public class BrowserScreen extends GuiScreen {
             char key = Keyboard.getEventCharacter();
             int num = Keyboard.getEventKey();
 
-            if(browser != null && !focused) { //Inject events into browser
-                if(pressed)
+            if (browser != null && !focused) { // Inject events into browser
+                if (pressed)
                     browser.injectKeyPressedByKeyCode(num, key, 0);
                 else
                     browser.injectKeyReleasedByKeyCode(num, key, 0);
 
-                if(key != 0)
+                if (key != 0)
                     browser.injectKeyTyped(key, 0);
             }
 
-            //Forward event to text box.
-            if(!pressed && focused && num == Keyboard.KEY_RETURN)
+            // Forward event to text box.
+            if (!pressed && focused && num == Keyboard.KEY_RETURN)
                 actionPerformed(go);
-            else if(pressed)
+            else if (pressed)
                 url.textboxKeyTyped(key, num);
         }
 
-        while(Mouse.next()) {
+        while (Mouse.next()) {
             int btn = Mouse.getEventButton();
             boolean pressed = Mouse.getEventButtonState();
             int sx = Mouse.getEventX();
             int sy = Mouse.getEventY();
             int wheel = Mouse.getEventDWheel();
 
-            if(browser != null) { //Inject events into browser. TODO: Handle mods & leaving.
-                int y = mc.displayHeight - sy - scaleY(20); //Don't forget to flip Y axis.
+            if (browser != null) { // Inject events into browser. TODO: Handle mods & leaving.
+                int y = mc.displayHeight - sy - scaleY(20); // Don't forget to flip Y axis.
 
-                if(wheel != 0)
+                if (wheel != 0)
                     browser.injectMouseWheel(sx, y, 0, 1, wheel);
-                else if(btn == -1)
+                else if (btn == -1)
                     browser.injectMouseMove(sx, y, 0, y < 0);
                 else
                     browser.injectMouseButton(sx, y, 0, btn + 1, pressed, 1);
             }
 
-            if(pressed) { //Forward events to GUI.
+            if (pressed) { // Forward events to GUI.
                 int x = sx * width / mc.displayWidth;
                 int y = height - (sy * height / mc.displayHeight) - 1;
 
                 try {
                     mouseClicked(x, y, btn);
-                } catch(Throwable t) {
+                } catch (Throwable t) {
                     t.printStackTrace();
                 }
 
@@ -201,43 +202,46 @@ public class BrowserScreen extends GuiScreen {
         }
     }
 
-    //Called by ExampleMod when the current browser's URL changes.
+    // Called by ExampleMod when the current browser's URL changes.
     public void onUrlChanged(IBrowser b, String nurl) {
-        if(b == browser && url != null) {
+        if (b == browser && url != null) {
             url.setText(nurl);
             vidMode.enabled = nurl.matches(YT_REGEX1) || nurl.matches(YT_REGEX2) || nurl.matches(YT_REGEX3);
         }
     }
 
-    //Handle button clicks
+    // Handle button clicks
     @Override
     protected void actionPerformed(GuiButton src) {
-        if(browser == null)
+        if (browser == null)
             return;
 
-        if(src.id == 0)
+        if (src.id == 0)
             browser.goBack();
-        else if(src.id == 1)
+        else if (src.id == 1)
             browser.goForward();
-        else if(src.id == 2) {
+        else if (src.id == 2) {
             String fixedURL = browsemod.INSTANCE.getAPI().punycode(url.getText());
+            if (!fixedURL.startsWith("http://") && !fixedURL.startsWith("https://")) {
+                fixedURL = "https://" + fixedURL;
+            }
             browser.loadURL(fixedURL);
-        } else if(src.id == 3) {
+        } else if (src.id == 3) {
             ClientProxy.setBackup(this);
             mc.displayGuiScreen(null);
-        } else if(src.id == 4) {
+        } else if (src.id == 4) {
             String loc = browser.getURL();
             String vId = null;
             boolean redo = false;
 
-            if(loc.matches(YT_REGEX1))
+            if (loc.matches(YT_REGEX1))
                 vId = loc.replaceFirst(YT_REGEX1, "$1");
-            else if(loc.matches(YT_REGEX2))
+            else if (loc.matches(YT_REGEX2))
                 vId = loc.replaceFirst(YT_REGEX2, "$1");
-            else if(loc.matches(YT_REGEX3))
+            else if (loc.matches(YT_REGEX3))
                 redo = true;
 
-            if(vId != null || redo) {
+            if (vId != null || redo) {
                 ClientProxy.setBackup(this);
                 mc.displayGuiScreen(new ScreenCfg(browser, vId));
             }
