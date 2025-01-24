@@ -43,15 +43,12 @@ public class TestGui extends GuiFrame
         super(new GuiScaler.Identity());
         style.setBackgroundColor(Color.TRANSLUCENT);
         System.out.println("Hey ich bin eine GUi");
-        setCssClass("home");
         GuiPanel PD = new GuiPanel(0, 0, 300, 200);
-        PD.setCssId("PD");
+        PD.setCssClass("pd");
 
-
-
-        GuiPanel iconPanel = new GuiPanel(50, 50, 0, 0); // Position und Größe des Icons
-        iconPanel.setCssId("icon_panel");
-        iconPanel.getStyle().setTexture(new GuiTextureSprite(iconTexture, 0, 0, 10, 10)); // Textur setzen
+        GuiPanel iconPanel = new GuiPanel(); // Position und Größe des Icons
+        iconPanel.setCssClass("iconpanel");
+        iconPanel.getStyle().setTexture(new GuiTextureSprite(iconTexture)); // Textur setzen
         iconPanel.addClickListener((x, y, button) -> System.out.println("Icon wurde geklickt!")); // Klickaktion
 
         PD.add(iconPanel);
