@@ -1,24 +1,62 @@
-#root
-{
-    background-color: rgba(255, 0, 100, 100); top: 50%; bottom: 50%; width: 80%; height: 80%; left:50%; right: 50%;
+#PD {
+    background-color: #333333; /* Dunkler Hintergrund */
+    border-width: 2px; /* Rahmenbreite */
+    border-color: #555555; /* Rahmenfarbe */
+    border-radius: 10px; /* Abgerundete Ecken */
+    width: 300px; /* Breite des Panels */
+    height: 200px; /* Höhe des Panels */
 }
 
-label
-{
-    background-color: translucent;
+/* Stile für das Label mit der Klasse 'title' */
+.title {
+    font-size: 20px; /* Schriftgröße */
+    text-align-vertical: center; /* Zentrierter Text */
+    color: linear-gradient(to left, violet, indigo, blue, green, yellow, orange, red);
+    width: 100px; /* Feste Breite */
+    height: 30px; /* Feste Höhe */
+    top: 25%; /* 25% der Höhe von oben */
+    left: 50%; /* 50% der Breite von links */
 }
 
-#lab1
-{
-    text-align: center; top: 50%; bottom: 50%; left:50%; right: 50%;
+.rainbow-button {
+    font-size: 18px;
+    text-align-vertical: center;
+    background-color: #444444; /* Hintergrundfarbe des Buttons */
+    border: 2px #555555; /* Rahmen */
+    border-radius: 5px; /* Abgerundete Ecken */
+    cursor: pointer;
 }
 
-#warn
-{
-    top: 40px; color: orange;
+.rainbow-button:hover {
+    background-color: #666666; /* Hintergrundfarbe bei Hover */
 }
 
-#button1
-{
-    bottom: 10px; left:50%; right: 50%;
+}
+
+.icon-button {
+    border: 2px #ffffff; /* Standardfarbe für den Rand */
+    border-radius: 8px; /* Abgerundete Ecken */
+    cursor: pointer;
+}
+
+.icon-button:hover {
+    border-color: #00ff00; /* Hover-Farbe für den Rand */
+}
+
+#main_panel {
+    background-color: #333333; /* Dunkler Hintergrund */
+    border-radius: 10px;
+    width: 300px;
+    height: 200px;
+}
+
+#icon_panel {
+    background-color: #444444; /* Dunkler Hintergrund */
+    width: 20px; /* Breite des Panels */
+    height: 20px; /* Höhe des Panels */
+    border-radius: 1px;
+}
+
+#icon_panel:hover {
+    border-color: #00ff00; /* Grün bei Hover */
 }

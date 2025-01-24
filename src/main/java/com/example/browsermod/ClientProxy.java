@@ -42,7 +42,7 @@ public class ClientProxy extends CommonProxy {
     @SubscribeEvent
     public void opengui(InputEvent.KeyInputEvent event){
         if(key.isPressed()){
-            ACsGuiApi.asyncLoadThenShowGui("PhoneGui",PhoneStartScreen::new);
+            ACsGuiApi.asyncLoadThenShowGui("PhoneGui",TestGui::new);
         }
     }
 }

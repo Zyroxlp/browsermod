@@ -1,7 +1,20 @@
-.frame_0 {
-  margin-left: 1700px;
-  margin-top: 494.234375px;
-  width: 216px;
-  height: 436px;
-  background-color: #ffffff;
+/* styles.css */
+
+@font-face {
+    font-family: "dnx:test_font";
+    /*font-style: italic;*/
+    src: url("browser:css/font.ttf");
+    font-size: 52px;
+}
+
+
+.title {
+    top: 10px;
+    left: 0px;
+    text-align: center;
+    border: 2px cyan;
+    padding: 0px;
+    text-align-vertical: center;
+    padding-left: 10px;
+}
 }
