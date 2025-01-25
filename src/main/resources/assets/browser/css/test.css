@@ -1,22 +1,55 @@
-.pd {
-    background-color: #333333; /* Dunkler Hintergrund */
-    border-width: 2px; /* Rahmenbreite */
-    border-color: #555555; /* Rahmenfarbe */
-    border-radius: 10px; /* Abgerundete Ecken */
-    width: 300px; /* Breite des Panels */
-    height: 200px; /* Höhe des Panels */
+.phoneBody {
+    background-color: #111211;
+    border-width: 5px;
+    border-color: #111211;
+    border-radius: 20px;
+    width: 32vh;
+    height: 54vh;
+    bottom: 10%;
+    right: 5%;
+}
+
+.phoneDisplay{
+
+    background-color: #272927;
+    width: 98%;
+    height: 84%;
+    bottom: 8%;
+    right:1%;
+
+}
+
+.phoneDisplayLogo {
+
+    font-size: 10px;
+    top:93%;
+    text-align: center;
+
+}
+
+.phoneDisplayCamera {
+
+    background-color: #262626;
+    width: 5%;
+    height: 3%;
+    border-width: 1px;
+    border-radius:40%;
+    border-color: #171717;
+    top:2%;
+    right:47%;
+
 }
 
 .iconpanel {
-    background-color: #9c1414; /* Dunkler Hintergrund */
+    background-color: #9c1414;
     top:20%;
     left:20%;
-    width: 5px; /* Breite des Panels */
-    height: 5px; /* Höhe des Panels */
+    width: 5px;
+    height: 5px;
     border-radius: 1px;
 }
 
 .iconpanel:hover {
-    border-color: #00ff00; /* Grün bei Hover */
-    border-radius: 1px;
+    background-color: #366919;
+
 }

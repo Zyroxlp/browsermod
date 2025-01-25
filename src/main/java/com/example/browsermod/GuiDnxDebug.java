@@ -24,7 +24,7 @@ import java.awt.Color;
 import java.util.*;
 
 public class GuiDnxDebug extends GuiFrame {
-    public static final ResourceLocation RESOURCE_LOCATION = new ResourceLocation("browser", "css/dnx_debug.css");
+    public static final ResourceLocation RESOURCE_LOCATION = new ResourceLocation("browser", "css/test.css");
 
     public GuiDnxDebug() {
         super(new GuiScaler.Identity());

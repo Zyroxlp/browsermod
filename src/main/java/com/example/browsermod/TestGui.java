@@ -12,13 +12,12 @@ import net.minecraft.util.text.TextFormatting;
 import org.lwjgl.Sys;
 
 import java.awt.*;
-import java.util.Arrays;
+import java.util.*;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
-public class TestGui extends GuiFrame
-{
+public class TestGui extends GuiFrame {
+
+
     public static final ResourceLocation RESOURCE_LOCATION = new ResourceLocation("browser", "css/test.css");
     private final ResourceLocation iconTexture = new ResourceLocation("minecraft", "textures/items/apple.png");
 
@@ -43,22 +42,39 @@ public class TestGui extends GuiFrame
         super(new GuiScaler.Identity());
         style.setBackgroundColor(Color.TRANSLUCENT);
         System.out.println("Hey ich bin eine GUi");
-        GuiPanel PD = new GuiPanel(0, 0, 300, 200);
-        PD.setCssClass("pd");
+        GuiPanel phoneBody = new GuiPanel(0, 0, 0, 0);
+        phoneBody.setCssClass("phoneBody");
+
+        GuiPanel phoneDisplayCamera = new GuiPanel();
+        phoneDisplayCamera.setCssClass("phoneDisplayCamera");
+        phoneBody.add(phoneDisplayCamera);
+
+        GuiLabel phoneDisplayLogo = new GuiLabel("HumanPhone");
+        phoneDisplayLogo.setCssClass("phoneDisplayLogo");
+        phoneBody.add(phoneDisplayLogo);
+
+
+
+        GuiPanel phoneDisplay = new GuiPanel();
+        phoneDisplay.setCssClass("phoneDisplay");
+        phoneBody.add(phoneDisplay);
+
+
+
 
         GuiPanel iconPanel = new GuiPanel(); // Position und Größe des Icons
         iconPanel.setCssClass("iconpanel");
         iconPanel.getStyle().setTexture(new GuiTextureSprite(iconTexture)); // Textur setzen
         iconPanel.addClickListener((x, y, button) -> System.out.println("Icon wurde geklickt!")); // Klickaktion
 
-        PD.add(iconPanel);
+        phoneBody.add(iconPanel);
 
         //title = new GuiLabel(0, 0, 0, 0, "UwU");
        // title.setCssClass("title");
-       // PD.add(title);
+       // phoneBody.add(title);
 
         // Panel zur GUI hinzufügen
-        add(PD);
+        add(phoneBody);
 
         // Regenbogenfarben starten
         //startRainbowEffect();
@@ -79,7 +95,7 @@ public class TestGui extends GuiFrame
 
     @Override
     public List<ResourceLocation> getCssStyles() {
-        return Arrays.asList(TestGui.RESOURCE_LOCATION);
+        return Collections.singletonList(TestGui.RESOURCE_LOCATION);
     }
 
     @Override
@@ -87,5 +103,9 @@ public class TestGui extends GuiFrame
         return false;
     }
 
+    @Override
+    public boolean needsCssReload() {
+        return true;
+    }
 
 }

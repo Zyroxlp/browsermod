@@ -23,7 +23,7 @@ public class browsemod {
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         proxy.preInit(event);
-        ACsGuiApi.registerStyleSheetToPreload(GuiDnxDebug.RESOURCE_LOCATION);
+        ACsGuiApi.registerStyleSheetToPreload(TestGui.RESOURCE_LOCATION);
         MinecraftForge.EVENT_BUS.register(this);
         System.out.println(NAME + " is loading!");
     }
