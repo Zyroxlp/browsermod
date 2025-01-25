@@ -6,9 +6,6 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
-import org.lwjgl.Sys;
-import org.lwjgl.input.Keyboard;
-
 @Mod(modid = browsemod.MODID, name = browsemod.NAME, version = browsemod.VERSION)
 public class browsemod {
 
@@ -23,7 +20,7 @@ public class browsemod {
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         proxy.preInit(event);
-        ACsGuiApi.registerStyleSheetToPreload(TestGui.RESOURCE_LOCATION);
+        ACsGuiApi.registerStyleSheetToPreload(phoneOff.RESOURCE_LOCATION);
         MinecraftForge.EVENT_BUS.register(this);
         System.out.println(NAME + " is loading!");
     }

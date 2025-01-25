@@ -6,20 +6,26 @@ import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.textarea.GuiLabel;
 import fr.aym.acsguis.component.layout.GuiScaler;
 import fr.aym.acsguis.utils.GuiTextureSprite;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 
 import net.minecraft.util.text.TextFormatting;
-import org.lwjgl.Sys;
 
 import java.awt.*;
 import java.util.*;
 import java.util.List;
 
-public class TestGui extends GuiFrame {
+public class phoneOff extends GuiFrame {
 
 
     public static final ResourceLocation RESOURCE_LOCATION = new ResourceLocation("browser", "css/test.css");
     private final ResourceLocation iconTexture = new ResourceLocation("minecraft", "textures/items/apple.png");
+
+    public static GuiPanel phoneDisplay;
+    public static GuiPanel phoneButtonVolumeUp;
+    public static GuiPanel phoneButtonVolumeDown;
+    public static GuiPanel phoneButtonStart;
+    private static HashMap<EntityPlayer, GuiFrame> openPhoneHashMap = new HashMap<>();
 
     private final TextFormatting[] rainbowColors = {
             TextFormatting.RED,
@@ -36,14 +42,15 @@ public class TestGui extends GuiFrame {
 
     private int colorIndex = 0;
 
-    private GuiLabel load;
-    public TestGui()
-    {
+    public phoneOff() {
         super(new GuiScaler.Identity());
         style.setBackgroundColor(Color.TRANSLUCENT);
         System.out.println("Hey ich bin eine GUi");
         GuiPanel phoneBody = new GuiPanel(0, 0, 0, 0);
         phoneBody.setCssClass("phoneBody");
+
+        GuiPanel phoneButtonVolumeUp = new GuiPanel();
+
 
         GuiPanel phoneDisplayCamera = new GuiPanel();
         phoneDisplayCamera.setCssClass("phoneDisplayCamera");
@@ -53,19 +60,26 @@ public class TestGui extends GuiFrame {
         phoneDisplayLogo.setCssClass("phoneDisplayLogo");
         phoneBody.add(phoneDisplayLogo);
 
-
-
-        GuiPanel phoneDisplay = new GuiPanel();
+        phoneDisplay = new GuiPanel();
         phoneDisplay.setCssClass("phoneDisplay");
         phoneBody.add(phoneDisplay);
-
-
-
 
         GuiPanel iconPanel = new GuiPanel(); // Position und Größe des Icons
         iconPanel.setCssClass("iconpanel");
         iconPanel.getStyle().setTexture(new GuiTextureSprite(iconTexture)); // Textur setzen
         iconPanel.addClickListener((x, y, button) -> System.out.println("Icon wurde geklickt!")); // Klickaktion
+
+        phoneButtonVolumeUp = new GuiPanel();
+        phoneButtonVolumeUp.setCssClass("phoneButtonVolumeUp");
+        phoneBody.add(phoneButtonVolumeUp);
+
+        phoneButtonVolumeDown = new GuiPanel();
+        phoneButtonVolumeDown.setCssClass("phoneButtonVolumeDown");
+        phoneBody.add(phoneButtonVolumeDown);
+
+        phoneButtonStart = new GuiPanel();
+        phoneButtonStart.setCssClass("phoneButtonStart");
+        phoneBody.add(phoneButtonStart);
 
         phoneBody.add(iconPanel);
 
@@ -78,6 +92,8 @@ public class TestGui extends GuiFrame {
 
         // Regenbogenfarben starten
         //startRainbowEffect();
+
+        openPhoneHashMap.put(ClientProxy.mc.player,this);
     }
 
     private void startRainbowEffect() {
@@ -95,7 +111,7 @@ public class TestGui extends GuiFrame {
 
     @Override
     public List<ResourceLocation> getCssStyles() {
-        return Collections.singletonList(TestGui.RESOURCE_LOCATION);
+        return Collections.singletonList(phoneOff.RESOURCE_LOCATION);
     }
 
     @Override

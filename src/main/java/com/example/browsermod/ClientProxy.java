@@ -1,8 +1,10 @@
 package com.example.browsermod;
 
 import fr.aym.acsguis.api.ACsGuiApi;
+import fr.aym.acsguis.component.panel.GuiFrame;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -11,10 +13,14 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
 import org.lwjgl.input.Keyboard;
 
+import java.util.HashMap;
+
 public class ClientProxy extends CommonProxy {
 
     private KeyBinding key;
-    private Minecraft mc = Minecraft.getMinecraft();
+    public static Minecraft mc = Minecraft.getMinecraft();
+
+
 
     public static ClientProxy INSTANCE;
 
@@ -42,7 +48,7 @@ public class ClientProxy extends CommonProxy {
     @SubscribeEvent
     public void opengui(InputEvent.KeyInputEvent event){
         if(key.isPressed()){
-            ACsGuiApi.asyncLoadThenShowGui("PhoneGui",TestGui::new);
+            ACsGuiApi.asyncLoadThenShowGui("PhoneGui", phoneOff::new);
         }
     }
 }
